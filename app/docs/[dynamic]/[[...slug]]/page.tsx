@@ -35,5 +35,8 @@ export async function generateMetadata(
 
   return {
     title: `Docs ${dynamic} ${slug?.join("/")}`,
+    other: {
+      "my-personal-metadata": "my-personal-metadata-value",
+    },
   };
 }
