@@ -13,6 +13,12 @@ export default async function DocsPage(
     redirect("/docs/page-2");
   }
 
+  if (slug?.join("/") === "page-3") {
+    await wait(100);
+
+    redirect("/docs/page-4");
+  }
+
   return (
     <div>
       <span>Docs Page</span>
@@ -22,6 +28,7 @@ export default async function DocsPage(
 }
 
 export const dynamic = "force-static";
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   return [
