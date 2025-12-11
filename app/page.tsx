@@ -2,10 +2,13 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div>
-      <Link href="/page-1">Page 1</Link>
-      <Link href="/page-2">Page 2</Link>
-      <Link href="/page-3">Page 3</Link>
-    </div>
+    <ul>
+      <li>
+        <Link href="/docs/page-1">Docs Page 1</Link>
+      </li>
+      <li>
+        <Link href="/docs/page-2">Docs Page 2</Link>
+      </li>
+    </ul>
   );
 }
