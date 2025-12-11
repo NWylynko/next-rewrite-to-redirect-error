@@ -18,6 +18,7 @@ export const middleware = (request: NextRequest, event: NextFetchEvent) => {
       const response = NextResponse.rewrite(new URL(rewriteUrl, request.url));
 
       response.cookies.set("my-cookie", "my-cookie-value");
+      response.headers.set("my-header", "my-header-value");
 
       return response;
     }
