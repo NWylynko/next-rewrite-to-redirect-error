@@ -27,3 +27,13 @@ export async function generateStaticParams() {
     { dynamic: "dogs", slug: ["page-2"] },
   ];
 }
+
+export async function generateMetadata(
+  props: PageProps<"/docs/[dynamic]/[[...slug]]">
+) {
+  const { dynamic, slug } = await props.params;
+
+  return {
+    title: `Docs ${dynamic} ${slug?.join("/")}`,
+  };
+}
