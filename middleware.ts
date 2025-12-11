@@ -2,6 +2,13 @@ import { NextFetchEvent, NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { clerkMiddleware } from "@clerk/nextjs/server";
 
+function getCookieDomain(request: NextRequest) {
+  let domain = request.nextUrl.hostname.split(".").slice(-2).join(".");
+  return domain === "localhost" ? "localhost" : `.${domain}`;
+}
+
+const ONE_YEAR = 60 * 60 * 24 * 365;
+
 export const middleware = (request: NextRequest, event: NextFetchEvent) => {
   return clerkMiddleware(async (auth, request, event) => {
     if (
@@ -17,7 +24,12 @@ export const middleware = (request: NextRequest, event: NextFetchEvent) => {
 
       const response = NextResponse.rewrite(new URL(rewriteUrl, request.url));
 
-      response.cookies.set("my-cookie", "my-cookie-value");
+      response.cookies.set("my-cookie", "my-cookie-value", {
+        maxAge: ONE_YEAR,
+        domain: getCookieDomain(request),
+        path: "/",
+        sameSite: "lax",
+      });
       response.headers.set("my-header", "my-header-value");
 
       return response;
