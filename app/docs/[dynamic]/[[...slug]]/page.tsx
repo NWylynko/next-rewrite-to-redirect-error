@@ -16,3 +16,14 @@ export default async function DocsPage(
     </div>
   );
 }
+
+export const dynamic = "force-static";
+
+export async function generateStaticParams() {
+  return [
+    { dynamic: "cats", slug: ["page-1"] },
+    { dynamic: "cats", slug: ["page-2"] },
+    { dynamic: "dogs", slug: ["page-1"] },
+    { dynamic: "dogs", slug: ["page-2"] },
+  ];
+}
