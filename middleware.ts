@@ -12,9 +12,10 @@ export const middleware = (request: NextRequest, event: NextFetchEvent) => {
 
       const dynamic = Math.random() > 0.5 ? "cats" : "dogs";
 
-      return NextResponse.rewrite(
-        new URL(`/docs/${dynamic}/${slug.join("/")}`, request.url)
-      );
+      const rewriteUrl = request.nextUrl.clone();
+      rewriteUrl.pathname = `/docs/${dynamic}/${slug.join("/")}`;
+
+      return NextResponse.rewrite(new URL(rewriteUrl, request.url));
     }
   })(request, event);
 };
