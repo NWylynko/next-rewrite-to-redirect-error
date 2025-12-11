@@ -1,11 +1,15 @@
 import { redirect } from "next/navigation";
 
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default async function DocsPage(
   props: PageProps<"/docs/[dynamic]/[[...slug]]">
 ) {
   const { dynamic, slug } = await props.params;
 
   if (slug?.join("/") === "page-1") {
+    await wait(100);
+
     redirect("/docs/page-2");
   }
 
