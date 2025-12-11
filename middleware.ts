@@ -1,6 +1,8 @@
 import { NextFetchEvent, NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { clerkMiddleware } from "@clerk/nextjs/server";
+import { precompute } from "flags/next";
+import { myRandomFlag } from "./flags";
 
 function getCookieDomain(request: NextRequest) {
   let domain = request.nextUrl.hostname.split(".").slice(-2).join(".");
@@ -17,10 +19,10 @@ export const middleware = (request: NextRequest, event: NextFetchEvent) => {
     ) {
       const [, , ...slug] = request.nextUrl.pathname.split("/");
 
-      const dynamic = Math.random() > 0.5 ? "cats" : "dogs";
+      const code = await precompute([myRandomFlag]);
 
       const rewriteUrl = request.nextUrl.clone();
-      rewriteUrl.pathname = `/docs/${dynamic}/${slug.join("/")}`;
+      rewriteUrl.pathname = `/docs/${code}/${slug.join("/")}`;
 
       const response = NextResponse.rewrite(new URL(rewriteUrl, request.url));
 
