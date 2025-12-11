@@ -15,7 +15,11 @@ export const middleware = (request: NextRequest, event: NextFetchEvent) => {
       const rewriteUrl = request.nextUrl.clone();
       rewriteUrl.pathname = `/docs/${dynamic}/${slug.join("/")}`;
 
-      return NextResponse.rewrite(new URL(rewriteUrl, request.url));
+      const response = NextResponse.rewrite(new URL(rewriteUrl, request.url));
+
+      response.cookies.set("my-cookie", "my-cookie-value");
+
+      return response;
     }
   })(request, event);
 };
